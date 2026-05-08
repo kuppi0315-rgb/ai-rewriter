@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
 
-  <title>AIリライター｜生成AI文章を自然な日本語に修正する無料ツール</title>
+  <title>AIリライター｜生成AI（ChatGPTなど）文章を自然な日本語に修正する無料ツール</title>
 
   <meta name="description" content="生成AI（ChatGPTなど）で作成した文章を自然な日本語に変換する無料ツール。レポート・ES・提出前チェックに対応。">
 
@@ -17,12 +17,7 @@
       font-family: sans-serif;
     }
 
-    .container {
-      max-width: 800px;
-      margin: auto;
-    }
-
-    .badge {
+    .mode-badges span {
       display: inline-block;
       background: #fff;
       padding: 6px 10px;
@@ -31,32 +26,33 @@
       font-size: 12px;
     }
 
-    .trust {
-      background: #fff;
-      padding: 10px;
+    .mode-btn {
+      padding: 10px 14px;
       border-radius: 10px;
-      margin: 10px 0;
-      font-size: 14px;
+      border: 1px solid #ccc;
+      background: #f7f7f7;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+      margin: 5px;
     }
 
-    .compare {
-      display: flex;
-      gap: 10px;
+    .mode-btn:hover {
+      background: #eaeaea;
     }
 
-    .box {
-      flex: 1;
-      background: #fff;
-      padding: 10px;
-      border-radius: 10px;
-      min-height: 100px;
-    }
-
-    button {
+    .mode-btn.active {
       background: #2b7cff;
       color: #000;
       border: none;
-      padding: 12px;
+    }
+
+    button {
+      background-color: #2b7cff;
+      color: #000;
+      border: none;
+      padding: 12px 16px;
       border-radius: 10px;
       font-weight: bold;
       cursor: pointer;
@@ -64,18 +60,14 @@
     }
 
     button.secondary {
-      background: #eee;
+      background-color: #eee;
+      color: #000;
     }
 
     textarea {
       width: 100%;
       height: 120px;
       margin-top: 10px;
-    }
-
-    .cta-text {
-      font-weight: bold;
-      margin: 10px 0;
     }
   </style>
 
@@ -87,57 +79,45 @@
 
   <h1>AIリライター</h1>
 
-  <p class="cta-text">
-    「生成AIっぽい文章を、提出できる自然な文章に」
+  <p class="sub">
+    生成AI（ChatGPTなど）で作成した文章を自然な日本語に変換
   </p>
 
-  <!-- 🔥安心要素 -->
-  <div class="trust">
-    ✔ 無料で使えます<br>
-    ✔ 登録不要ですぐ利用可能<br>
-    ✔ レポート・ES・提出前チェック対応
-  </div>
-
   <!-- バッジ -->
-  <div>
-    <span class="badge">🧠 生成AI対応</span>
-    <span class="badge">📄 レポート</span>
-    <span class="badge">💼 ES</span>
+  <div class="mode-badges">
+    <span>🧠 生成AI対応</span>
+    <span>📄 レポート対応</span>
+    <span>💼 ES対応</span>
   </div>
 
   <!-- モード -->
-  <h3>変換モード</h3>
-  <select id="mode">
-    <option>標準</option>
-    <option>レポート</option>
-    <option>カジュアル</option>
-    <option>ES</option>
-  </select>
+  <div class="mode-area">
+
+    <label>変換モード</label>
+
+    <div>
+      <button class="mode-btn active" onclick="setMode('normal')">標準</button>
+      <button class="mode-btn" onclick="setMode('report')">レポート</button>
+      <button class="mode-btn" onclick="setMode('casual')">カジュアル</button>
+      <button class="mode-btn" onclick="setMode('es')">ES</button>
+    </div>
+
+  </div>
 
   <!-- 入力 -->
-  <textarea id="input" placeholder="生成AIで作成した文章を貼ってください（レポート・ES対応）"></textarea>
+  <textarea id="input" placeholder="生成AI（ChatGPTなど）で作成した文章を貼ってください（レポート・ES対応）"></textarea>
 
   <button onclick="convert()">AIっぽさを減らす</button>
   <button class="secondary" onclick="strongConvert()">徹底的に自然化</button>
 
   <div id="loading">変換中...</div>
 
-  <!-- 🔥Before / After -->
-  <h3>比較</h3>
+  <!-- Before / After -->
+  <h3>変換前</h3>
+  <div id="before"></div>
 
-  <div class="compare">
-
-    <div class="box">
-      <h4>変換前</h4>
-      <div id="before"></div>
-    </div>
-
-    <div class="box">
-      <h4>変換後</h4>
-      <div id="output"></div>
-    </div>
-
-  </div>
+  <h3>変換後</h3>
+  <div id="output"></div>
 
   <div id="score"></div>
   <div id="scoreBar"></div>
@@ -148,6 +128,20 @@
 </div>
 
 <script src="script.js"></script>
+
+<script>
+  let mode = "normal";
+
+  function setMode(m) {
+    mode = m;
+
+    document.querySelectorAll(".mode-btn").forEach(btn => {
+      btn.classList.remove("active");
+    });
+
+    event.target.classList.add("active");
+  }
+</script>
 
 </body>
 </html>
