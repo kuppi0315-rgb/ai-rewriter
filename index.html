@@ -3,48 +3,15 @@
 <head>
   <meta charset="UTF-8">
 
-  <title>AIリライター｜生成AI（ChatGPTなど）文章を自然な日本語に修正する無料ツール</title>
+  <!-- 🔥SEOタイトル（生成AI主軸＋ChatGPT補助） -->
+  <title>AIリライター｜生成AI（ChatGPTなど）文章を自然な日本語に修正する無料ツール（レポート・ES対応）</title>
 
-  <meta name="description" content="生成AI（ChatGPTなど）で作成した文章を自然な日本語に変換する無料ツール。レポート・ES・提出前チェックに対応。">
+  <meta name="description" content="AIリライターは生成AI（ChatGPTなど）で作成された文章を自然な日本語に変換する無料ツールです。レポート添削・ES文章修正・提出前チェックに対応しています。">
 
+  <!-- Google Search Console認証 -->
   <meta name="google-site-verification" content="yBGhlbyOhO3ESKcQlIhhgsZruC7BdkLmzDiIuU5-Wx4" />
 
   <link rel="stylesheet" href="style.css">
-
-  <!-- 👇簡易スタイル（モード見やすくする） -->
-  <style>
-    .mode-area {
-      margin: 15px 0;
-    }
-
-    .mode-buttons {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 8px;
-    }
-
-    .mode-btn {
-      padding: 10px 14px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      background: #f7f7f7;
-      cursor: pointer;
-      font-weight: bold;
-      transition: 0.2s;
-    }
-
-    .mode-btn:hover {
-      background: #eaeaea;
-    }
-
-    .mode-btn.active {
-      background: #2b7cff;
-      color: white;
-      border: none;
-    }
-  </style>
-
 </head>
 
 <body>
@@ -57,45 +24,30 @@
       生成AI（ChatGPTなど）で作成した文章を自然な日本語に変換
     </p>
 
-    <!-- 🔥バッジ -->
+    <!-- 🔥対応範囲バッジ -->
     <div class="mode-badges">
-      <span class="badge">🧠 生成AI対応</span>
+      <span class="badge">🧠 生成AI文章修正</span>
       <span class="badge">📄 レポート対応</span>
       <span class="badge">💼 ES対応</span>
     </div>
 
-    <!-- 🧭モード（ボタン化して視認性UP） -->
+    <!-- 🧭モード選択（生成AIベース表現） -->
     <div class="mode-area">
 
-      <label>変換モード</label>
+      <label for="mode">変換モード</label>
 
-      <div class="mode-buttons">
-
-        <button class="mode-btn active" onclick="setMode('normal')">
-          🧠 標準（自然化）
-        </button>
-
-        <button class="mode-btn" onclick="setMode('report')">
-          📄 レポート（硬め）
-        </button>
-
-        <button class="mode-btn" onclick="setMode('casual')">
-          💬 カジュアル
-        </button>
-
-        <button class="mode-btn" onclick="setMode('es')">
-          💼 ES・就活
-        </button>
-
-      </div>
+      <select id="mode">
+        <option value="normal">🧠 標準（生成AI文章を自然化）</option>
+        <option value="report">📄 レポート（フォーマルに調整）</option>
+        <option value="casual">💬 カジュアル（柔らかく自然に）</option>
+        <option value="es">💼 ES・就活（丁寧で読みやすく）</option>
+      </select>
 
     </div>
 
     <div class="card">
 
-      <!-- 🔥placeholder改善 -->
-      <textarea id="input"
-        placeholder="生成AI（ChatGPTなど）で作成した文章を貼ってください（レポート・ES・提出前チェック対応）"></textarea>
+      <textarea id="input" placeholder="生成AI（ChatGPTなど）で作成した文章を貼ってね"></textarea>
 
       <button onclick="convert()">AIっぽさを減らす</button>
       <button class="secondary" onclick="strongConvert()">徹底的に自然化</button>
@@ -116,24 +68,25 @@
 
     </div>
 
+    <!-- 🧠SEO説明ブロック（生成AI軸） -->
+    <section class="seo-text">
+
+      <h2>生成AI（ChatGPTなど）文章の自然化ツール</h2>
+
+      <p>
+        AIリライターは生成AI（ChatGPTなど）で作成された文章を自然な日本語に修正する無料ツールです。
+        レポート添削やES文章修正、提出前チェックに対応しています。
+      </p>
+
+      <p>
+        生成AIによる文章の不自然さを改善し、より読みやすく自然な文章へ変換できます。
+      </p>
+
+    </section>
+
   </div>
 
   <script src="script.js"></script>
-
-  <!-- 🔥モード切替JS（最低限） -->
-  <script>
-    let mode = "normal";
-
-    function setMode(m) {
-      mode = m;
-
-      document.querySelectorAll(".mode-btn").forEach(btn => {
-        btn.classList.remove("active");
-      });
-
-      event.target.classList.add("active");
-    }
-  </script>
 
 </body>
 </html>
