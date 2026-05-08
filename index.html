@@ -1,84 +1,99 @@
-body {
-  background-color: #ffffff; /* ←完全ホワイトに戻す */
-  font-family: sans-serif;
-  margin: 0;
-  padding: 0;
-  color: #000;
-}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
 
-.container {
-  max-width: 800px;
-  margin: auto;
-  padding: 20px;
-}
+  <title>AIリライター｜ChatGPT文章を自然にする無料ツール（レポート・ES・添削対応）</title>
 
-h1 {
-  margin-bottom: 5px;
-  color: #000;
-}
+  <meta name="description" content="AIリライターはChatGPTなどで生成したAIっぽい文章を自然な日本語に変換する無料ツールです。レポート添削・ES文章修正・提出前チェックに対応しています。">
 
-.sub {
-  color: #333;
-  margin-bottom: 20px;
-}
+  <!-- Google Search Console 認証 -->
+  <meta name="google-site-verification" content="yBGhlbyOhO3ESKcQlIhhgsZruC7BdkLmzDiIuU5-Wx4" />
 
-/* バッジ（シンプル） */
-.mode-badges span {
-  display: inline-block;
-  background: #eee;
-  color: #000;
-  padding: 6px 10px;
-  margin: 4px;
-  border-radius: 8px;
-  font-size: 12px;
-}
+  <link rel="stylesheet" href="style.css">
+</head>
 
-/* 入力欄 */
-textarea {
-  width: 100%;
-  height: 120px;
-  margin-top: 10px;
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #aaa;
-}
+<body>
 
-/* メインボタン（シンプル灰系） */
-button {
-  background-color: #ddd;
-  color: #000;
-  border: 1px solid #aaa;
-  padding: 12px 16px;
-  border-radius: 6px;
-  font-weight: normal;
-  cursor: pointer;
-  margin-top: 10px;
-}
+  <div class="container">
 
-button:hover {
-  background-color: #ccc;
-}
+    <h1>AIリライター</h1>
+    <p class="sub">ChatGPT文章を自然な日本語に変換する無料ツール</p>
 
-/* サブボタン */
-button.secondary {
-  background-color: #f5f5f5;
-  color: #000;
-  border: 1px solid #ccc;
-}
+    <!-- ナビ（SEO用の疑似内部リンク） -->
+    <nav class="nav">
+      <a href="#tool">変換ツール</a>
+      <a href="#report">レポート対策</a>
+      <a href="#es">ES対策</a>
+    </nav>
 
-/* モードボタン（完全シンプル） */
-.mode-btn {
-  padding: 8px 12px;
-  border-radius: 6px;
-  border: 1px solid #aaa;
-  background: #fff;
-  color: #000;
-  font-weight: normal;
-  cursor: pointer;
-  margin: 5px;
-}
+    <!-- メインツール -->
+    <section id="tool" class="card">
 
-.mode-btn.active {
-  background: #ddd;
-  color: #000;
-}
+      <h2>AI文章修正ツール（ChatGPT・レポート・ES対応）</h2>
+
+      <select id="mode">
+        <option value="normal">通常</option>
+        <option value="report">レポート</option>
+        <option value="casual">カジュアル</option>
+      </select>
+
+      <textarea id="input" placeholder="ChatGPTで作成した文章を貼ってね"></textarea>
+
+      <button onclick="convert()">自然にする</button>
+      <button class="secondary" onclick="strongConvert()">もっと自然にする</button>
+
+      <div id="loading">変換中...</div>
+
+      <h3>変換前</h3>
+      <div id="before"></div>
+
+      <h3>変換後</h3>
+      <div id="output"></div>
+
+      <div id="score"></div>
+      <div id="scoreBar"></div>
+      <div id="reason"></div>
+
+      <button onclick="copyText()">コピー</button>
+
+    </section>
+
+    <!-- レポートSEOブロック -->
+    <section id="report" class="seo-section">
+
+      <h2>レポート添削・AI文章修正</h2>
+
+      <p>
+        AIリライターはレポート添削やAI文章修正に対応しており、
+        ChatGPTで作成した文章を自然な日本語に整えることができます。
+      </p>
+
+      <p>
+        大学レポート提出前の最終チェックとして、AIっぽい表現を減らす用途に最適です。
+      </p>
+
+    </section>
+
+    <!-- ES SEOブロック -->
+    <section id="es" class="seo-section">
+
+      <h2>ES（エントリーシート）文章修正</h2>
+
+      <p>
+        就職活動のES作成において、AI生成文章の不自然さを改善し、
+        より自然で読みやすい文章に変換できます。
+      </p>
+
+      <p>
+        ES提出前の文章チェックとして、多くの学生に利用されています。
+      </p>
+
+    </section>
+
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
