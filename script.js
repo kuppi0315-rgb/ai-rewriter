@@ -1,7 +1,12 @@
 function convert() {
 
-  // 入力取得
-  const input = document.getElementById("input").value;
+  const inputElement = document.getElementById("input");
+  const beforeElement = document.getElementById("before");
+  const outputElement = document.getElementById("output");
+  const loadingElement = document.getElementById("loading");
+  const copyBtn = document.getElementById("copyBtn");
+
+  const input = inputElement.value;
 
   // 空チェック
   if (input.trim() === "") {
@@ -10,34 +15,33 @@ function convert() {
   }
 
   // ローディング表示
-  document.getElementById("loading").style.display = "block";
+  loadingElement.style.display = "block";
 
-  // 少し待って変換っぽくする
-  setTimeout(() => {
+  // 擬似変換
+  setTimeout(function () {
 
-    // 変換前表示
-    document.getElementById("before").innerText = input;
+    // 変換前
+    beforeElement.innerText = input;
 
     // 簡易自然化
     let output = input;
 
-    output = output.replaceAll("非常に", "かなり");
-    output = output.replaceAll("利用する", "使う");
-    output = output.replaceAll("することができます", "できます");
+    output = output.replace(/非常に/g, "かなり");
+    output = output.replace(/利用する/g, "使う");
+    output = output.replace(/することができます/g, "できます");
 
-    // 変換後表示
-    document.getElementById("output").innerText = output;
+    // 変換後
+    outputElement.innerText = output;
 
-    // ローディング非表示
-    document.getElementById("loading").style.display = "none";
+    // ローディング消す
+    loadingElement.style.display = "none";
 
     // コピーボタン表示
-    document.getElementById("copyBtn").style.display = "inline-block";
+    copyBtn.style.display = "inline-block";
 
   }, 500);
 }
 
-// コピー機能
 function copyText() {
 
   const text = document.getElementById("output").innerText;
