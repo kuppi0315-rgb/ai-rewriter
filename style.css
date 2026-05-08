@@ -41,27 +41,33 @@ h1 {
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }
 
-/* モードエリア */
+/* モード */
 .mode-area {
   margin-bottom: 20px;
 }
 
-/* モードタイトル */
 .mode-label {
   font-weight: bold;
   margin-bottom: 10px;
   color: #333;
 }
 
-/* モードボタン全体 */
-.mode-buttons {
+/* モード選択 */
+.mode-select {
   display: flex;
-  gap: 8px;
+  gap: 12px;
   flex-wrap: wrap;
+  margin-top: 10px;
 }
 
-/* モードボタン */
-.mode-btn {
+/* ラジオ非表示 */
+.mode-option input {
+  display: none;
+}
+
+/* モード見た目 */
+.mode-option span {
+  display: inline-block;
   background: #EAF7EF;
   color: #2FBF71;
   border: 1px solid #CFEEDB;
@@ -69,16 +75,17 @@ h1 {
   border-radius: 999px;
   cursor: pointer;
   font-size: 14px;
+  font-weight: bold;
   transition: 0.2s;
 }
 
-/* モードホバー */
-.mode-btn:hover {
+/* ホバー */
+.mode-option span:hover {
   background: #DDF4E6;
 }
 
 /* 選択中 */
-.mode-btn.active {
+.mode-option input:checked + span {
   background: #2FBF71;
   color: white;
 }
@@ -148,7 +155,7 @@ button:hover {
   margin-top: 14px;
 }
 
-/* スマホ対応 */
+/* スマホ */
 @media (max-width: 600px) {
 
   body {
@@ -163,11 +170,11 @@ button:hover {
     font-size: 30px;
   }
 
-  .mode-buttons {
+  .mode-select {
     gap: 6px;
   }
 
-  .mode-btn {
+  .mode-option span {
     font-size: 13px;
     padding: 7px 12px;
   }
