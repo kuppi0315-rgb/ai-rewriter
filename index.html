@@ -11,19 +11,17 @@
 
   <link rel="stylesheet" href="style.css">
 
+  <!-- 👇簡易スタイル（モード見やすくする） -->
   <style>
-    body {
-      background-color: #f2f6ff;
-      font-family: sans-serif;
+    .mode-area {
+      margin: 15px 0;
     }
 
-    .mode-badges span {
-      display: inline-block;
-      background: #fff;
-      padding: 6px 10px;
-      margin: 4px;
-      border-radius: 8px;
-      font-size: 12px;
+    .mode-buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 8px;
     }
 
     .mode-btn {
@@ -31,11 +29,9 @@
       border-radius: 10px;
       border: 1px solid #ccc;
       background: #f7f7f7;
-      color: #000;
-      font-weight: bold;
       cursor: pointer;
+      font-weight: bold;
       transition: 0.2s;
-      margin: 5px;
     }
 
     .mode-btn:hover {
@@ -44,30 +40,8 @@
 
     .mode-btn.active {
       background: #2b7cff;
-      color: #000;
+      color: white;
       border: none;
-    }
-
-    button {
-      background-color: #2b7cff;
-      color: #000;
-      border: none;
-      padding: 12px 16px;
-      border-radius: 10px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    button.secondary {
-      background-color: #eee;
-      color: #000;
-    }
-
-    textarea {
-      width: 100%;
-      height: 120px;
-      margin-top: 10px;
     }
   </style>
 
@@ -75,73 +49,91 @@
 
 <body>
 
-<div class="container">
+  <div class="container">
 
-  <h1>AIリライター</h1>
+    <h1>AIリライター</h1>
 
-  <p class="sub">
-    生成AI（ChatGPTなど）で作成した文章を自然な日本語に変換
-  </p>
+    <p class="sub">
+      生成AI（ChatGPTなど）で作成した文章を自然な日本語に変換
+    </p>
 
-  <!-- バッジ -->
-  <div class="mode-badges">
-    <span>🧠 生成AI対応</span>
-    <span>📄 レポート対応</span>
-    <span>💼 ES対応</span>
-  </div>
+    <!-- 🔥バッジ -->
+    <div class="mode-badges">
+      <span class="badge">🧠 生成AI対応</span>
+      <span class="badge">📄 レポート対応</span>
+      <span class="badge">💼 ES対応</span>
+    </div>
 
-  <!-- モード -->
-  <div class="mode-area">
+    <!-- 🧭モード（ボタン化して視認性UP） -->
+    <div class="mode-area">
 
-    <label>変換モード</label>
+      <label>変換モード</label>
 
-    <div>
-      <button class="mode-btn active" onclick="setMode('normal')">標準</button>
-      <button class="mode-btn" onclick="setMode('report')">レポート</button>
-      <button class="mode-btn" onclick="setMode('casual')">カジュアル</button>
-      <button class="mode-btn" onclick="setMode('es')">ES</button>
+      <div class="mode-buttons">
+
+        <button class="mode-btn active" onclick="setMode('normal')">
+          🧠 標準（自然化）
+        </button>
+
+        <button class="mode-btn" onclick="setMode('report')">
+          📄 レポート（硬め）
+        </button>
+
+        <button class="mode-btn" onclick="setMode('casual')">
+          💬 カジュアル
+        </button>
+
+        <button class="mode-btn" onclick="setMode('es')">
+          💼 ES・就活
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="card">
+
+      <!-- 🔥placeholder改善 -->
+      <textarea id="input"
+        placeholder="生成AI（ChatGPTなど）で作成した文章を貼ってください（レポート・ES・提出前チェック対応）"></textarea>
+
+      <button onclick="convert()">AIっぽさを減らす</button>
+      <button class="secondary" onclick="strongConvert()">徹底的に自然化</button>
+
+      <div id="loading">変換中...</div>
+
+      <h3>変換前</h3>
+      <div id="before"></div>
+
+      <h3>変換後</h3>
+      <div id="output"></div>
+
+      <div id="score"></div>
+      <div id="scoreBar"></div>
+      <div id="reason"></div>
+
+      <button onclick="copyText()">コピー</button>
+
     </div>
 
   </div>
 
-  <!-- 入力 -->
-  <textarea id="input" placeholder="生成AI（ChatGPTなど）で作成した文章を貼ってください（レポート・ES対応）"></textarea>
+  <script src="script.js"></script>
 
-  <button onclick="convert()">AIっぽさを減らす</button>
-  <button class="secondary" onclick="strongConvert()">徹底的に自然化</button>
+  <!-- 🔥モード切替JS（最低限） -->
+  <script>
+    let mode = "normal";
 
-  <div id="loading">変換中...</div>
+    function setMode(m) {
+      mode = m;
 
-  <!-- Before / After -->
-  <h3>変換前</h3>
-  <div id="before"></div>
+      document.querySelectorAll(".mode-btn").forEach(btn => {
+        btn.classList.remove("active");
+      });
 
-  <h3>変換後</h3>
-  <div id="output"></div>
-
-  <div id="score"></div>
-  <div id="scoreBar"></div>
-  <div id="reason"></div>
-
-  <button onclick="copyText()">コピー</button>
-
-</div>
-
-<script src="script.js"></script>
-
-<script>
-  let mode = "normal";
-
-  function setMode(m) {
-    mode = m;
-
-    document.querySelectorAll(".mode-btn").forEach(btn => {
-      btn.classList.remove("active");
-    });
-
-    event.target.classList.add("active");
-  }
-</script>
+      event.target.classList.add("active");
+    }
+  </script>
 
 </body>
 </html>
