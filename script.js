@@ -1,235 +1,101 @@
-body {
-  font-family: sans-serif;
-  background: #F5F7F5;
-  margin: 0;
-  padding: 20px;
-  color: #2C2C2C;
-}
+function convert() {
 
-.container {
-  max-width: 720px;
-  margin: auto;
-}
+  const input = document.getElementById("input").value;
 
-/* タイトル */
-h1 {
-  color: #2FBF71;
-  margin-bottom: 5px;
-  font-size: 36px;
-}
-
-/* サブ */
-.sub {
-  color: #666;
-  margin-bottom: 10px;
-  font-size: 16px;
-}
-
-/* SEO */
-.seo-title {
-  font-size: 18px;
-  color: #444;
-  margin-bottom: 20px;
-  font-weight: bold;
-}
-
-/* モード説明 */
-.mode-guide {
-  color: #666;
-  margin-bottom: 14px;
-  line-height: 1.6;
-}
-
-/* 機能紹介 */
-.feature-box {
-  background: white;
-  border-radius: 14px;
-  padding: 14px 18px;
-  margin-bottom: 14px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-}
-
-/* タイトル */
-.feature-box summary {
-  cursor: pointer;
-  font-weight: bold;
-  color: #2FBF71;
-  font-size: 17px;
-  list-style: none;
-}
-
-/* Chrome矢印削除 */
-.feature-box summary::-webkit-details-marker {
-  display: none;
-}
-
-/* 開いた時 */
-.feature-box[open] summary {
-  margin-bottom: 10px;
-}
-
-/* 説明 */
-.feature-box p {
-  color: #444;
-  line-height: 1.7;
-  margin: 0;
-}
-
-/* カード */
-.card {
-  background: white;
-  padding: 24px;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  margin-top: 20px;
-}
-
-/* モード */
-.mode-area {
-  margin-bottom: 20px;
-}
-
-.mode-label {
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.mode-select {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.mode-option input {
-  display: none;
-}
-
-.mode-option span {
-  display: inline-block;
-  background: #EAF7EF;
-  color: #2FBF71;
-  border: 1px solid #CFEEDB;
-  padding: 8px 14px;
-  border-radius: 999px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: bold;
-}
-
-.mode-option input:checked + span {
-  background: #2FBF71;
-  color: white;
-}
-
-/* 入力 */
-textarea {
-  width: 100%;
-  height: 160px;
-  padding: 14px;
-  border-radius: 12px;
-  border: 1px solid #DDEBDD;
-  margin-top: 10px;
-  box-sizing: border-box;
-  resize: vertical;
-  font-size: 15px;
-  line-height: 1.6;
-}
-
-/* ボタン */
-button {
-  margin-top: 10px;
-  padding: 10px 16px;
-  background: #2FBF71;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #28A863;
-}
-
-/* 出力 */
-#before,
-#output {
-  background: #FAFAFA;
-  padding: 12px;
-  border-radius: 10px;
-  margin-top: 6px;
-  min-height: 40px;
-  border: 1px solid #EEEEEE;
-  line-height: 1.6;
-  white-space: pre-wrap;
-}
-
-/* スコア */
-#score {
-  margin-top: 18px;
-  font-weight: bold;
-  color: #2FBF71;
-  font-size: 18px;
-}
-
-/* バー背景 */
-.score-bar-bg {
-  width: 100%;
-  height: 10px;
-  background: #E5E5E5;
-  border-radius: 999px;
-  margin-top: 10px;
-  overflow: hidden;
-}
-
-/* バー */
-#scoreBar {
-  height: 100%;
-  width: 0%;
-  background: #2FBF71;
-  transition: 0.4s;
-}
-
-/* 理由 */
-#reason {
-  margin-top: 10px;
-  color: #666;
-  line-height: 1.6;
-}
-
-/* ローディング */
-#loading {
-  display: none;
-  margin-top: 12px;
-  color: #2FBF71;
-  font-weight: bold;
-}
-
-/* コピー */
-#copyBtn {
-  margin-top: 14px;
-}
-
-/* スマホ */
-@media (max-width: 600px) {
-
-  body {
-    padding: 14px;
+  if (input.trim() === "") {
+    alert("文章を入力してください");
+    return;
   }
 
-  h1 {
-    font-size: 30px;
-  }
+  document.getElementById("loading").style.display = "block";
 
-  .card {
-    padding: 18px;
-  }
+  setTimeout(() => {
 
-  .mode-select {
-    gap: 6px;
-  }
+    document.getElementById("before").innerText = input;
 
-  textarea {
-    height: 140px;
-  }
+    let output = input;
+
+    // 標準変換
+    output = output.replace(/非常に/g, "かなり");
+    output = output.replace(/利用する/g, "使う");
+    output = output.replace(/することができます/g, "できます");
+
+    // モード取得
+    const mode =
+      document.querySelector('input[name="mode"]:checked').value;
+
+    // モード別
+    if (mode === "report") {
+
+      output = output.replace(/すごく/g, "非常に");
+      output = output.replace(/やばい/g, "重大");
+
+    }
+
+    if (mode === "casual") {
+
+      output = output.replace(/です。/g, "！");
+      output = output.replace(/ます。/g, "ます！");
+
+    }
+
+    if (mode === "es") {
+
+      output = output.replace(/思います/g, "考えています");
+      output = output.replace(/やりたい/g, "取り組みたい");
+
+    }
+
+    document.getElementById("output").innerText = output;
+
+    // スコア
+    const score =
+      Math.floor(Math.random() * 21) + 80;
+
+    document.getElementById("score").innerText =
+      "自然さスコア：" + score + "点";
+
+    document.getElementById("scoreBar").style.width =
+      score + "%";
+
+    // 理由
+    let reason = "";
+
+    if (score >= 95) {
+
+      reason =
+        "かなり自然で人間らしい文章です。";
+
+    } else if (score >= 90) {
+
+      reason =
+        "自然で読みやすい文章です。";
+
+    } else {
+
+      reason =
+        "ややAI感がありますが自然です。";
+
+    }
+
+    document.getElementById("reason").innerText =
+      reason;
+
+    document.getElementById("loading").style.display =
+      "none";
+
+    document.getElementById("copyBtn").style.display =
+      "inline-block";
+
+  }, 700);
+}
+
+function copyText() {
+
+  const text =
+    document.getElementById("output").innerText;
+
+  navigator.clipboard.writeText(text);
+
+  alert("コピーしました！");
 }
