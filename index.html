@@ -26,20 +26,26 @@
 
   <div class="container">
 
+    <!-- タイトル -->
     <h1>AIリライター</h1>
 
     <p class="sub">
       ChatGPT・生成AI文章を自然な日本語へ修正
     </p>
 
+    <!-- SEO見出し -->
     <h2 class="seo-title">
       レポート・ES・生成AI文章の自然化ツール
     </h2>
 
-    <!-- 機能紹介 -->
+    <!-- モード説明 -->
+
+    <p class="mode-guide">
+      用途に合わせて4つの変換モードを選べます
+    </p>
 
     <details class="feature-box">
-      <summary>🧠 AI文章修正（普段使い）</summary>
+      <summary>🟢 標準モード</summary>
 
       <p>
         ChatGPTなどの生成AIで作成した文章を、
@@ -48,16 +54,16 @@
     </details>
 
     <details class="feature-box">
-      <summary>📄 レポート提出用（硬い文章に調整）</summary>
+      <summary>📄 レポートモード</summary>
 
       <p>
         大学レポート向けに、
-        丁寧で論理的な文章へ自然化します。
+        丁寧で論理的な文章へ調整します。
       </p>
     </details>
 
     <details class="feature-box">
-      <summary>💼 ES・就活用（自然で読みやすく）</summary>
+      <summary>💼 ESモード</summary>
 
       <p>
         エントリーシートや自己PRを、
@@ -66,21 +72,23 @@
     </details>
 
     <details class="feature-box">
-      <summary>✨ AIっぽい文章を自然化</summary>
+      <summary>😊 カジュアルモード</summary>
 
       <p>
-        「少し不自然」「AI感がある」と感じる文章を、
-        より人間らしい自然な表現へ整えます。
+        SNSや会話向けに、
+        柔らかく親しみやすい文章へ変換します。
       </p>
     </details>
 
     <!-- メインカード -->
     <div class="card">
 
-      <!-- モード -->
+      <!-- モード選択 -->
       <div class="mode-area">
 
-        <p class="mode-label">変換モード</p>
+        <p class="mode-label">
+          変換モード
+        </p>
 
         <div class="mode-select">
 
@@ -95,13 +103,13 @@
           </label>
 
           <label class="mode-option">
-            <input type="radio" name="mode" value="casual">
-            <span>カジュアル</span>
+            <input type="radio" name="mode" value="es">
+            <span>ES</span>
           </label>
 
           <label class="mode-option">
-            <input type="radio" name="mode" value="es">
-            <span>ES</span>
+            <input type="radio" name="mode" value="casual">
+            <span>カジュアル</span>
           </label>
 
         </div>
@@ -143,6 +151,7 @@
         <div id="scoreBar"></div>
       </div>
 
+      <!-- 理由 -->
       <div id="reason"></div>
 
       <!-- コピー -->
