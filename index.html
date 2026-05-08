@@ -3,11 +3,10 @@
 <head>
   <meta charset="UTF-8">
 
-  <title>AIリライター｜ChatGPT文章を自然にする無料ツール（レポート・ES・添削対応）</title>
+  <title>AIリライター｜ChatGPT文章を自然にする無料ツール（レポート・ES・カジュアル対応）</title>
 
-  <meta name="description" content="AIリライターはChatGPTなどで生成したAIっぽい文章を自然な日本語に変換する無料ツールです。レポート添削・ES文章修正・提出前チェックに対応しています。">
+  <meta name="description" content="AIリライターはChatGPTなどで生成したAIっぽい文章を自然な日本語に変換する無料ツールです。レポート・ES・カジュアル文章に対応しています。">
 
-  <!-- Google Search Console 認証 -->
   <meta name="google-site-verification" content="yBGhlbyOhO3ESKcQlIhhgsZruC7BdkLmzDiIuU5-Wx4" />
 
   <link rel="stylesheet" href="style.css">
@@ -18,30 +17,38 @@
   <div class="container">
 
     <h1>AIリライター</h1>
-    <p class="sub">ChatGPT文章を自然な日本語に変換する無料ツール</p>
 
-    <!-- ナビ（SEO用の疑似内部リンク） -->
-    <nav class="nav">
-      <a href="#tool">変換ツール</a>
-      <a href="#report">レポート対策</a>
-      <a href="#es">ES対策</a>
-    </nav>
+    <p class="sub">
+      レポート・ES・カジュアル文をワンタップで自然化
+    </p>
 
-    <!-- メインツール -->
-    <section id="tool" class="card">
+    <!-- 🔥対応範囲バッジ（認知強化） -->
+    <div class="mode-badges">
+      <span class="badge">📄 レポート対応</span>
+      <span class="badge">💬 カジュアル対応</span>
+      <span class="badge">💼 ES対応</span>
+    </div>
 
-      <h2>AI文章修正ツール（ChatGPT・レポート・ES対応）</h2>
+    <!-- 🧭モード選択（説明付きで直感化） -->
+    <div class="mode-area">
+
+      <label for="mode">変換モード</label>
 
       <select id="mode">
-        <option value="normal">通常</option>
-        <option value="report">レポート</option>
-        <option value="casual">カジュアル</option>
+        <option value="normal">🧠 標準（バランスよく自然化）</option>
+        <option value="report">📄 レポート（硬め・論文向け）</option>
+        <option value="casual">💬 カジュアル（自然で柔らかく）</option>
+        <option value="es">💼 ES・就活（読みやすく丁寧）</option>
       </select>
+
+    </div>
+
+    <div class="card">
 
       <textarea id="input" placeholder="ChatGPTで作成した文章を貼ってね"></textarea>
 
-      <button onclick="convert()">自然にする</button>
-      <button class="secondary" onclick="strongConvert()">もっと自然にする</button>
+      <button onclick="convert()">AIっぽさを減らす</button>
+      <button class="secondary" onclick="strongConvert()">徹底的に自然化</button>
 
       <div id="loading">変換中...</div>
 
@@ -57,36 +64,20 @@
 
       <button onclick="copyText()">コピー</button>
 
-    </section>
+    </div>
 
-    <!-- レポートSEOブロック -->
-    <section id="report" class="seo-section">
+    <!-- 🧠SEO説明ブロック -->
+    <section class="seo-text">
 
-      <h2>レポート添削・AI文章修正</h2>
+      <h2>レポート・ES・カジュアル文章の自然化に対応</h2>
 
       <p>
-        AIリライターはレポート添削やAI文章修正に対応しており、
-        ChatGPTで作成した文章を自然な日本語に整えることができます。
+        AIリライターは、ChatGPTなどで生成されたAI文章を自然な日本語に修正する無料ツールです。
+        レポート添削やES文章修正、日常的なカジュアル文章の調整にも対応しています。
       </p>
 
       <p>
-        大学レポート提出前の最終チェックとして、AIっぽい表現を減らす用途に最適です。
-      </p>
-
-    </section>
-
-    <!-- ES SEOブロック -->
-    <section id="es" class="seo-section">
-
-      <h2>ES（エントリーシート）文章修正</h2>
-
-      <p>
-        就職活動のES作成において、AI生成文章の不自然さを改善し、
-        より自然で読みやすい文章に変換できます。
-      </p>
-
-      <p>
-        ES提出前の文章チェックとして、多くの学生に利用されています。
+        提出前の最終チェックとして、AIっぽさを減らし読みやすい文章に変換できます。
       </p>
 
     </section>
