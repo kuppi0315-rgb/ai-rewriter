@@ -39,7 +39,6 @@
     </h2>
 
     <!-- モード説明 -->
-
     <p class="mode-guide">
       用途に合わせて4つの変換モードを選べます
     </p>
@@ -133,7 +132,17 @@
 
       <!-- ローディング -->
       <div id="loading">
-        変換中...
+
+        <p id="loadingLabel">
+          文章を自然化しています...
+        </p>
+
+        <div class="loading-bar-bg">
+
+          <div id="loadingBar"></div>
+
+        </div>
+
       </div>
 
       <!-- 変換前 -->
