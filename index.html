@@ -22,22 +22,30 @@
     生成AIで作成した文章を自然な日本語に変換
   </p>
 
-  <!-- 入力 -->
-  <textarea id="input" placeholder="生成AI（ChatGPTなど）の文章を貼ってください"></textarea>
+  <div class="card">
 
-  <!-- ボタン（元の構成） -->
-  <button onclick="convert()">変換</button>
+    <!-- 入力 -->
+    <textarea id="input" placeholder="生成AI（ChatGPTなど）の文章を貼ってください"></textarea>
 
-  <button onclick="copyText()">コピー</button>
+    <!-- ボタン -->
+    <button onclick="convert()">変換</button>
 
-  <!-- 出力 -->
-  <div id="loading">変換中...</div>
+    <!-- ローディング -->
+    <div id="loading">変換中...</div>
 
-  <h3>変換前</h3>
-  <div id="before"></div>
+    <!-- 出力 -->
+    <h3>変換前</h3>
+    <div id="before"></div>
 
-  <h3>変換後</h3>
-  <div id="output"></div>
+    <h3>変換後</h3>
+    <div id="output"></div>
+
+    <!-- コピー（最初は隠す） -->
+    <button id="copyBtn" onclick="copyText()" style="display:none;">
+      コピー
+    </button>
+
+  </div>
 
 </div>
 
