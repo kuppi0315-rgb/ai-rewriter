@@ -1,97 +1,47 @@
-body {
-  font-family: sans-serif;
-  background: #F5F7F5;
-  margin: 0;
-  padding: 20px;
-  color: #2C2C2C;
-}
-
-.container {
-  max-width: 720px;
-  margin: auto;
-}
-
-h1 {
-  color: #2FBF71;
-  margin-bottom: 5px;
-}
-
-.sub {
-  color: #666;
-  margin-bottom: 20px;
-}
-
-.card {
-  background: white;
-  padding: 20px;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-}
-
-textarea {
-  width: 100%;
-  height: 160px;
-  padding: 12px;
-  border-radius: 12px;
-  border: 1px solid #DDEBDD;
-  margin-top: 10px;
-}
-
-select {
-  padding: 8px;
-  border-radius: 8px;
-  margin-bottom: 10px;
-}
-
 button {
-  margin-top: 10px;
-  padding: 10px 14px;
-  background: #2FBF71;
-  color: white;
+  background-color: #2b7cff;   /* しっかり青 */
+  color: #ffffff;              /* 文字を白で固定 */
   border: none;
+  padding: 12px 16px;
   border-radius: 10px;
   font-weight: bold;
   cursor: pointer;
-  margin-right: 6px;
+  transition: 0.2s;
 }
 
+button:hover {
+  background-color: #1f5fd6;
+}
+
+/* サブボタン（従来のsecondary用） */
 button.secondary {
-  background: #eee;
+  background-color: #f2f2f2;
   color: #333;
+  border: 1px solid #ccc;
 }
 
-#before, #output {
-  background: #FAFAFA;
-  padding: 10px;
+button.secondary:hover {
+  background-color: #e6e6e6;
+}
+
+/* モードボタン（さっきのやつ） */
+.mode-btn {
+  padding: 10px 14px;
   border-radius: 10px;
-  margin-top: 6px;
-  min-height: 40px;
-  white-space: pre-wrap;
-}
-
-#score {
-  margin-top: 10px;
+  border: 1px solid #ccc;
+  background: #f7f7f7;
+  color: #333;
   font-weight: bold;
-  color: #2FBF71;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
-#scoreBar {
-  height: 8px;
-  background: #2FBF71;
-  border-radius: 5px;
-  margin-top: 5px;
-  width: 50%;
-  transition: 0.3s;
+.mode-btn:hover {
+  background: #eaeaea;
 }
 
-#reason {
-  margin-top: 8px;
-  font-size: 13px;
-  color: #666;
-}
-
-#loading {
-  display: none;
-  margin-top: 10px;
-  color: #2FBF71;
+.mode-btn.active {
+  background: #2b7cff;
+  color: white;
+  border: none;
 }
