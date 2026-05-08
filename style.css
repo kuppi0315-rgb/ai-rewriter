@@ -1,27 +1,46 @@
 body {
   font-family: sans-serif;
-  background: #F8FAF8;
-  padding: 24px;
+  background: #F5F7F5;
+  margin: 0;
+  padding: 20px;
+  color: #2C2C2C;
+}
+
+.container {
   max-width: 720px;
   margin: auto;
-  color: #2C2C2C;
 }
 
 h1 {
   color: #2FBF71;
+  margin-bottom: 5px;
 }
 
-p {
+.sub {
   color: #666;
+  margin-bottom: 20px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }
 
 textarea {
   width: 100%;
-  height: 170px;
+  height: 160px;
   padding: 12px;
   border-radius: 12px;
   border: 1px solid #DDEBDD;
   margin-top: 10px;
+}
+
+select {
+  padding: 8px;
+  border-radius: 8px;
+  margin-bottom: 10px;
 }
 
 button {
@@ -36,32 +55,39 @@ button {
   margin-right: 6px;
 }
 
-select {
-  padding: 8px;
-  border-radius: 8px;
-  margin-top: 10px;
+button.secondary {
+  background: #eee;
+  color: #333;
 }
 
 #before, #output {
-  background: white;
-  padding: 12px;
-  border-radius: 12px;
+  background: #FAFAFA;
+  padding: 10px;
+  border-radius: 10px;
   margin-top: 6px;
-  border: 1px solid #E6F2EA;
-  white-space: pre-wrap;
   min-height: 40px;
+  white-space: pre-wrap;
 }
 
 #score {
-  margin-top: 12px;
+  margin-top: 10px;
   font-weight: bold;
   color: #2FBF71;
 }
 
+#scoreBar {
+  height: 8px;
+  background: #2FBF71;
+  border-radius: 5px;
+  margin-top: 5px;
+  width: 50%;
+  transition: 0.3s;
+}
+
 #reason {
   margin-top: 8px;
-  color: #666;
   font-size: 13px;
+  color: #666;
 }
 
 #loading {
