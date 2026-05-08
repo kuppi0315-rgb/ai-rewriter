@@ -1,50 +1,59 @@
 function convert() {
 
-  const inputElement = document.getElementById("input");
-  const beforeElement = document.getElementById("before");
-  const outputElement = document.getElementById("output");
-  const loadingElement = document.getElementById("loading");
-  const copyBtn = document.getElementById("copyBtn");
+  const input = document.getElementById("input").value;
 
-  const input = inputElement.value;
-
-  // 空チェック
   if (input.trim() === "") {
     alert("文章を入力してください");
     return;
   }
 
-  // ローディング表示
-  loadingElement.style.display = "block";
+  document.getElementById("loading").style.display = "block";
 
-  // 擬似変換
-  setTimeout(function () {
+  setTimeout(() => {
 
-    // 変換前
-    beforeElement.innerText = input;
+    document.getElementById("before").innerText = input;
 
-    // 簡易自然化
     let output = input;
 
     output = output.replace(/非常に/g, "かなり");
     output = output.replace(/利用する/g, "使う");
     output = output.replace(/することができます/g, "できます");
 
-    // 変換後
-    outputElement.innerText = output;
+    document.getElementById("output").innerText = output;
 
-    // ローディング消す
-    loadingElement.style.display = "none";
+    /* スコア */
+    const score = Math.floor(Math.random() * 21) + 80;
 
-    // コピーボタン表示
-    copyBtn.style.display = "inline-block";
+    document.getElementById("score").innerText =
+      "自然さスコア：" + score + "点";
 
-  }, 500);
+    document.getElementById("scoreBar").style.width =
+      score + "%";
+
+    let reason = "";
+
+    if (score >= 95) {
+      reason = "かなり自然な文章です。";
+    } else if (score >= 90) {
+      reason = "自然で読みやすい文章です。";
+    } else {
+      reason = "ややAI感がありますが自然です。";
+    }
+
+    document.getElementById("reason").innerText = reason;
+
+    document.getElementById("loading").style.display = "none";
+
+    document.getElementById("copyBtn").style.display =
+      "inline-block";
+
+  }, 700);
 }
 
 function copyText() {
 
-  const text = document.getElementById("output").innerText;
+  const text =
+    document.getElementById("output").innerText;
 
   navigator.clipboard.writeText(text);
 
