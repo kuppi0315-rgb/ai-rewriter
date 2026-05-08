@@ -1,156 +1,190 @@
-function convert() {
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
 
-  const input = document.getElementById("input").value;
+  <title>
+    AIリライター｜ChatGPT・生成AI文章を自然な日本語に修正【無料】
+  </title>
 
-  if (input.trim() === "") {
+  <meta
+    name="description"
+    content="ChatGPT・生成AIで作成した文章を自然な日本語に変換する無料ツール。レポート・ES・カジュアル文章に対応。"
+  >
 
-    alert("文章を入力してください");
+  <meta
+    name="google-site-verification"
+    content="yBGhlbyOhO3ESKcQlIhhgsZruC7BdkLmzDiIuU5-Wx4"
+  >
 
-    return;
-  }
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  // ローディング表示
-  document.getElementById("loading").style.display =
-    "block";
+  <link rel="stylesheet" href="style.css">
+</head>
 
-  // バー取得
-  const loadingBar =
-    document.getElementById("loadingBar");
+<body>
 
-  // 初期化
-  loadingBar.style.width = "0%";
+  <div class="container">
 
-  // 進捗
-  let progress = 0;
+    <!-- タイトル -->
+    <h1>AIリライター</h1>
 
-  // アニメーション
-  const loadingAnimation = setInterval(() => {
+    <p class="sub">
+      ChatGPT・生成AI文章を自然な日本語へ修正
+    </p>
 
-    progress += Math.random() * 12;
+    <!-- SEO -->
+    <h2 class="seo-title">
+      レポート・ES・生成AI文章の自然化ツール
+    </h2>
 
-    if (progress > 90) {
+    <!-- モード説明 -->
+    <p class="mode-guide">
+      用途に合わせて4つの変換モードを選べます
+    </p>
 
-      progress = 90;
-    }
+    <details class="feature-box">
+      <summary>🟢 標準モード</summary>
 
-    loadingBar.style.width =
-      progress + "%";
+      <p>
+        ChatGPTなどの生成AIで作成した文章を、
+        自然で読みやすい日本語へ変換します。
+      </p>
+    </details>
 
-  }, 120);
+    <details class="feature-box">
+      <summary>📄 レポートモード</summary>
 
-  setTimeout(() => {
+      <p>
+        大学レポート向けに、
+        丁寧で論理的な文章へ調整します。
+      </p>
+    </details>
 
-    // 変換前表示
-    document.getElementById("before").innerText =
-      input;
+    <details class="feature-box">
+      <summary>💼 ESモード</summary>
 
-    // 変換前スコア
-    const beforeScore =
-      Math.floor(Math.random() * 31) + 50;
+      <p>
+        エントリーシートや自己PRを、
+        読みやすく自然な表現へ整えます。
+      </p>
+    </details>
 
-    document.getElementById("beforeScore").innerText =
-      "変換前自然さ：" + beforeScore + "点";
+    <details class="feature-box">
+      <summary>😊 カジュアルモード</summary>
 
-    let output = input;
+      <p>
+        SNSや会話向けに、
+        柔らかく親しみやすい文章へ変換します。
+      </p>
+    </details>
 
-    // 共通変換
-    output = output.replace(/非常に/g, "かなり");
-    output = output.replace(/利用する/g, "使う");
-    output = output.replace(/することができます/g, "できます");
+    <!-- メイン -->
+    <div class="card">
 
-    // モード取得
-    const mode =
-      document.querySelector(
-        'input[name="mode"]:checked'
-      ).value;
+      <!-- モード -->
+      <div class="mode-area">
 
-    // レポート
-    if (mode === "report") {
+        <p class="mode-label">
+          変換モード
+        </p>
 
-      output = output.replace(/すごく/g, "非常に");
-      output = output.replace(/やばい/g, "重大");
-    }
+        <div class="mode-select">
 
-    // カジュアル
-    if (mode === "casual") {
+          <label class="mode-option">
+            <input type="radio" name="mode" value="normal" checked>
+            <span>標準</span>
+          </label>
 
-      output = output.replace(/です。/g, "！");
-      output = output.replace(/ます。/g, "ます！");
-    }
+          <label class="mode-option">
+            <input type="radio" name="mode" value="report">
+            <span>レポート</span>
+          </label>
 
-    // ES
-    if (mode === "es") {
+          <label class="mode-option">
+            <input type="radio" name="mode" value="es">
+            <span>ES</span>
+          </label>
 
-      output = output.replace(/思います/g, "考えています");
-      output = output.replace(/やりたい/g, "取り組みたい");
-    }
+          <label class="mode-option">
+            <input type="radio" name="mode" value="casual">
+            <span>カジュアル</span>
+          </label>
 
-    // 出力
-    document.getElementById("output").innerText =
-      output;
+        </div>
 
-    // 変換後スコア
-    const score =
-      Math.floor(Math.random() * 21) + 80;
+      </div>
 
-    document.getElementById("score").innerText =
-      "変換後自然さ：" + score + "点";
+      <!-- 入力 -->
+      <textarea
+        id="input"
+        placeholder="ChatGPT・生成AIで作成した文章を貼ってください"
+      ></textarea>
 
-    // スコアバー
-    document.getElementById("scoreBar").style.width =
-      score + "%";
+      <!-- ボタン -->
+      <div class="button-area">
 
-    // 改善
-    document.getElementById("improveScore").innerText =
-      "+" + (score - beforeScore) + " 改善しました";
+        <button onclick="convert()">
+          変換
+        </button>
 
-    // 理由
-    let reason = "";
+      </div>
 
-    if (score >= 95) {
+      <!-- ローディング -->
+      <div id="loading">
 
-      reason =
-        "かなり自然で人間らしい文章です。";
+        <p id="loadingLabel">
+          文章を自然化しています...
+        </p>
 
-    } else if (score >= 90) {
+        <div class="loading-bar-bg">
 
-      reason =
-        "自然で読みやすい文章です。";
+          <div id="loadingBar"></div>
 
-    } else {
+        </div>
 
-      reason =
-        "ややAI感がありますが自然です。";
-    }
+      </div>
 
-    document.getElementById("reason").innerText =
-      reason;
+      <!-- 変換前 -->
+      <h3>変換前</h3>
 
-    // ローディング終了
-    clearInterval(loadingAnimation);
+      <div id="before"></div>
 
-    loadingBar.style.width = "100%";
+      <div id="beforeScore"></div>
 
-    setTimeout(() => {
+      <!-- 変換後 -->
+      <h3>変換後</h3>
 
-      document.getElementById("loading").style.display =
-        "none";
+      <div id="output"></div>
 
-    }, 250);
+      <!-- コピー -->
+      <button
+        id="copyBtn"
+        onclick="copyText()"
+        style="display:none;"
+      >
+        コピー
+      </button>
 
-    // コピー表示
-    document.getElementById("copyBtn").style.display =
-      "inline-block";
+      <!-- スコア -->
+      <div id="score"></div>
 
-  }, 1800);
-}
+      <!-- スコアバー -->
+      <div class="score-bar-bg">
+        <div id="scoreBar"></div>
+      </div>
 
-function copyText() {
+      <!-- 改善 -->
+      <div id="improveScore"></div>
 
-  const text =
-    document.getElementById("output").innerText;
+      <!-- 理由 -->
+      <div id="reason"></div>
 
-  navigator.clipboard.writeText(text);
+    </div>
 
-  alert("コピーしました！");
-}
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
