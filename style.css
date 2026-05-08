@@ -173,7 +173,7 @@ button:hover {
   font-size: 18px;
 }
 
-/* バー背景 */
+/* スコアバー背景 */
 .score-bar-bg {
   width: 100%;
   height: 10px;
@@ -183,7 +183,7 @@ button:hover {
   overflow: hidden;
 }
 
-/* バー */
+/* スコアバー */
 #scoreBar {
   height: 100%;
   width: 0%;
@@ -208,9 +208,35 @@ button:hover {
 /* ローディング */
 #loading {
   display: none;
-  margin-top: 12px;
+  margin-top: 20px;
+}
+
+/* ローディング文字 */
+#loadingLabel {
   color: #2FBF71;
   font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* ローディングバー背景 */
+.loading-bar-bg {
+  width: 100%;
+  height: 16px;
+  background: #E5E5E5;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+/* ローディングバー */
+#loadingBar {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    #2FBF71,
+    #7DFFB1
+  );
+  transition: width 0.15s linear;
 }
 
 /* コピー */
