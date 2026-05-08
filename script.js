@@ -1,8 +1,10 @@
 function convert() {
 
+  // 入力取得
   const input = document.getElementById("input").value;
 
-  if (!input.trim()) {
+  // 空チェック
+  if (input.trim() === "") {
     alert("文章を入力してください");
     return;
   }
@@ -10,21 +12,20 @@ function convert() {
   // ローディング表示
   document.getElementById("loading").style.display = "block";
 
-  // 擬似変換処理
+  // 少し待って変換っぽくする
   setTimeout(() => {
 
-    // 変換前
+    // 変換前表示
     document.getElementById("before").innerText = input;
 
-    // 自然化処理（簡易）
+    // 簡易自然化
     let output = input;
 
-    output = output.replace(/です。/g, "です");
-    output = output.replace(/ます。/g, "ます");
-    output = output.replace(/非常に/g, "かなり");
-    output = output.replace(/利用する/g, "使う");
+    output = output.replaceAll("非常に", "かなり");
+    output = output.replaceAll("利用する", "使う");
+    output = output.replaceAll("することができます", "できます");
 
-    // 出力
+    // 変換後表示
     document.getElementById("output").innerText = output;
 
     // ローディング非表示
@@ -33,9 +34,10 @@ function convert() {
     // コピーボタン表示
     document.getElementById("copyBtn").style.display = "inline-block";
 
-  }, 700);
+  }, 500);
 }
 
+// コピー機能
 function copyText() {
 
   const text = document.getElementById("output").innerText;
