@@ -26,11 +26,11 @@ function convert() {
 
   const loadingAnimation = setInterval(() => {
 
-    progress += Math.random() * 7;
+    progress += Math.random() * 8;
 
-    if (progress > 92) {
+    if (progress > 90) {
 
-      progress = 92;
+      progress = 90;
     }
 
     loadingBar.style.width =
@@ -67,7 +67,6 @@ function convert() {
       // =====================================
 
       patterns.push(
-
         {
           word: "することができます",
           minus: 1.2,
@@ -126,14 +125,7 @@ function convert() {
           word: "必要",
           minus: 0.2,
           reason: "抽象表現"
-        },
-
-        {
-          word: "〜",
-          minus: 0.3,
-          reason: "AI特有記号"
         }
-
       );
 
       // =====================================
@@ -169,7 +161,6 @@ function convert() {
           }
 
         );
-
       }
 
       // =====================================
@@ -205,7 +196,6 @@ function convert() {
           }
 
         );
-
       }
 
       // =====================================
@@ -244,16 +234,9 @@ function convert() {
             word: "ではないでしょうか",
             minus: 1.0,
             reason: "ChatGPT感"
-          },
-
-          {
-            word: "重要です",
-            minus: 0.8,
-            reason: "説明っぽい"
           }
 
         );
-
       }
 
       // =====================================
@@ -267,8 +250,7 @@ function convert() {
 
         if (count > 0) {
 
-          score -=
-            count * pattern.minus;
+          score -= count * pattern.minus;
 
           reasons.push(
             "・" +
@@ -277,13 +259,12 @@ function convert() {
             pattern.word +
             "）"
           );
-
         }
 
       });
 
       // =====================================
-      // スコア補正
+      // 最低・最高
       // =====================================
 
       if (score > 97) {
@@ -296,73 +277,24 @@ function convert() {
         score = 35;
       }
 
-      // =====================================
-      // ランク
-      // =====================================
-
-      let rank = "";
-
-      if (score >= 95) {
-
-        rank = "超自然";
-
-      }
-
-      else if (score >= 88) {
-
-        rank = "自然";
-
-      }
-
-      else if (score >= 75) {
-
-        rank = "ややAI感";
-
-      }
-
-      else if (score >= 60) {
-
-        rank = "AI感あり";
-
-      }
-
-      else {
-
-        rank = "AI感が強い";
-
-      }
-
       return {
-
         score: Math.round(score),
-
-        aiPercent:
-          Math.round(100 - score),
-
-        reasons:
-          [...new Set(reasons)],
-
-        rank: rank
-
+        reasons: [...new Set(reasons)]
       };
 
     }
 
     // =====================================
-    // 変換前採点
+    // 変換前スコア
     // =====================================
 
     const beforeData =
       calculateScore(input, mode);
 
     document.getElementById("beforeScore").innerText =
-      "AIっぽさ：" +
-      beforeData.aiPercent +
-      "% ｜ 自然さ：" +
+      "変換前自然さ：" +
       beforeData.score +
-      "点（" +
-      beforeData.rank +
-      "）";
+      "点";
 
     // =====================================
     // 共通変換
@@ -381,18 +313,14 @@ function convert() {
       ["向上する", "上がる"],
       ["低下する", "下がる"],
       ["非常に", "かなり"],
-      ["様々な", "さまざまな"],
-      ["現代社会では", "今では"]
+      ["様々な", "さまざまな"]
 
     ];
 
     commonReplacements.forEach(pair => {
 
       output =
-        output.replaceAll(
-          pair[0],
-          pair[1]
-        );
+        output.replaceAll(pair[0], pair[1]);
 
     });
 
@@ -412,6 +340,12 @@ function convert() {
         output.replaceAll(
           "さらに、",
           "あと、"
+        );
+
+      output =
+        output.replaceAll(
+          "現代社会では",
+          "今では"
         );
 
     }
@@ -530,12 +464,6 @@ function convert() {
 
       output =
         output.replaceAll(
-          "重要です",
-          "大事"
-        );
-
-      output =
-        output.replaceAll(
           "です。",
           "！"
         );
@@ -556,20 +484,16 @@ function convert() {
       output;
 
     // =====================================
-    // 変換後採点
+    // 変換後スコア
     // =====================================
 
     const afterData =
       calculateScore(output, mode);
 
     document.getElementById("score").innerText =
-      "AIっぽさ：" +
-      afterData.aiPercent +
-      "% ｜ 自然さ：" +
+      "変換後自然さ：" +
       afterData.score +
-      "点（" +
-      afterData.rank +
-      "）";
+      "点";
 
     document.getElementById("scoreBar").style.width =
       afterData.score + "%";
@@ -579,45 +503,36 @@ function convert() {
     // =====================================
 
     const improve =
-      afterData.score -
-      beforeData.score;
+      afterData.score - beforeData.score;
 
     document.getElementById("improveScore").innerText =
       "+" +
       improve +
-     " 改善しました";
+      " 改善しました";
 
     // =====================================
     // 理由表示
     // =====================================
 
-    if (
-      beforeData.reasons.length > 0
-    ) {
+    if (beforeData.reasons.length > 0) {
 
       document.getElementById("reason").innerText =
-        "検出されたAIっぽさ：\n\n" +
+        "検出されたAIっぽさ：\n" +
         beforeData.reasons.join("\n");
 
-    }
-
-    else {
+    } else {
 
       document.getElementById("reason").innerText =
         "かなり自然な文章です！";
-
     }
 
     // =====================================
     // ローディング終了
     // =====================================
 
-    clearInterval(
-      loadingAnimation
-    );
+    clearInterval(loadingAnimation);
 
-    loadingBar.style.width =
-      "100%";
+    loadingBar.style.width = "100%";
 
     setTimeout(() => {
 
@@ -634,7 +549,6 @@ function convert() {
       "inline-block";
 
   }, 1800);
-
 }
 
 function copyText() {
@@ -645,5 +559,4 @@ function copyText() {
   navigator.clipboard.writeText(text);
 
   alert("コピーしました！");
-
 }
