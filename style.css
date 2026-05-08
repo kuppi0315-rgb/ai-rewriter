@@ -1,36 +1,39 @@
 button {
-  background-color: #2b7cff;   /* しっかり青 */
-  color: #ffffff;              /* 文字を白で固定 */
+  background-color: #2b7cff;   /* メインボタン青 */
+  color: #ffffff;              /* 文字を白で固定（重要） */
   border: none;
   padding: 12px 16px;
   border-radius: 10px;
   font-weight: bold;
   cursor: pointer;
   transition: 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
 button:hover {
   background-color: #1f5fd6;
+  color: #ffffff; /* hover時も白維持 */
 }
 
-/* サブボタン（従来のsecondary用） */
+/* サブボタン */
 button.secondary {
   background-color: #f2f2f2;
-  color: #333;
+  color: #333333;              /* ←ここ重要（黒系にする） */
   border: 1px solid #ccc;
 }
 
 button.secondary:hover {
   background-color: #e6e6e6;
+  color: #111111;
 }
 
-/* モードボタン（さっきのやつ） */
+/* モードボタン */
 .mode-btn {
   padding: 10px 14px;
   border-radius: 10px;
   border: 1px solid #ccc;
   background: #f7f7f7;
-  color: #333;
+  color: #333333;              /* ←ここで文字見えるように */
   font-weight: bold;
   cursor: pointer;
   transition: 0.2s;
@@ -38,10 +41,11 @@ button.secondary:hover {
 
 .mode-btn:hover {
   background: #eaeaea;
+  color: #111111;
 }
 
 .mode-btn.active {
   background: #2b7cff;
-  color: white;
+  color: #ffffff;              /* 選択中は白文字 */
   border: none;
 }
