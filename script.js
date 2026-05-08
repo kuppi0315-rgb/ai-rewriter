@@ -1,117 +1,46 @@
-window.convert = function () {
-  runConvert(1);
-};
+function convert() {
 
-window.strongConvert = function () {
-  runConvert(2);
-};
+  const input = document.getElementById("input").value;
 
-function runConvert(level) {
+  if (!input.trim()) {
+    alert("文章を入力してください");
+    return;
+  }
 
-  let text = document.getElementById("input").value;
-  let mode = document.getElementById("mode").value;
-
+  // ローディング表示
   document.getElementById("loading").style.display = "block";
-  document.getElementById("before").innerText = text;
 
+  // 擬似変換処理
   setTimeout(() => {
 
-    let converted = text;
+    // 変換前
+    document.getElementById("before").innerText = input;
 
-    const connectives = {
-      "したがって": "",
-      "さらに": "また",
-      "そのため": "そのため",
-      "そして": "また",
-      "また、": "",
-      "一方で": "一方",
-      "加えて": "また"
-    };
+    // 自然化処理（簡易）
+    let output = input;
 
-    for (let key in connectives) {
-      converted = converted.replace(new RegExp(key, "g"), connectives[key] ?? "");
-    }
+    output = output.replace(/です。/g, "です");
+    output = output.replace(/ます。/g, "ます");
+    output = output.replace(/非常に/g, "かなり");
+    output = output.replace(/利用する/g, "使う");
 
-    converted = converted
-      .replace(/であるため/g, "なので")
-      .replace(/必要である/g, "必要だ")
-      .replace(/重要である/g, "大切だ")
-      .replace(/考えられる/g, "考える");
+    // 出力
+    document.getElementById("output").innerText = output;
 
-    if (level === 2) {
-      converted = converted
-        .replace(/という/g, "")
-        .replace(/こと/g, "")
-        .replace(/である/g, "だ");
-    }
-
-    converted = converted.replace(/。/g, "。\n");
-
-    if (mode === "report") {
-      converted = converted.replace(/です/g, "である");
-    }
-
-    if (mode === "casual") {
-      converted = converted.replace(/である/g, "だ");
-    }
-
-    document.getElementById("output").innerText = converted;
-
-    let score = calcScore(text, converted);
-    document.getElementById("score").innerText =
-      "自然さスコア: " + score;
-
-    document.getElementById("scoreBar").style.width = score + "%";
-
-    document.getElementById("reason").innerText =
-      generateReason(text);
-
+    // ローディング非表示
     document.getElementById("loading").style.display = "none";
 
-  }, 300);
+    // コピーボタン表示
+    document.getElementById("copyBtn").style.display = "inline-block";
+
+  }, 700);
 }
 
-function calcScore(original, converted) {
-  let score = 100;
+function copyText() {
 
-  const patterns = [
-    /したがって/g,
-    /さらに/g,
-    /である/g,
-    /重要である/g,
-    /必要である/g
-  ];
-
-  patterns.forEach(p => {
-    const m = original.match(p);
-    if (m) score -= m.length * 7;
-  });
-
-  if (converted.length > 400) score -= 10;
-
-  return Math.max(0, score);
-}
-
-function generateReason(text) {
-  let reasons = [];
-
-  if (/したがって|さらに|そのため/.test(text)) {
-    reasons.push("接続詞が多いです");
-  }
-
-  if (/である/.test(text)) {
-    reasons.push("硬い表現が多いです");
-  }
-
-  if (text.length > 200) {
-    reasons.push("文章がやや長いです");
-  }
-
-  return reasons.length ? "改善ポイント: " + reasons.join(" / ") : "自然な文章です";
-}
-
-window.copyText = function () {
   const text = document.getElementById("output").innerText;
+
   navigator.clipboard.writeText(text);
+
   alert("コピーしました！");
-};
+}
