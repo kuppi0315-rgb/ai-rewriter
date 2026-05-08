@@ -38,7 +38,6 @@ function runConvert(level) {
       .replace(/重要である/g, "大切だ")
       .replace(/考えられる/g, "考える");
 
-    // 強化モード
     if (level === 2) {
       converted = converted
         .replace(/という/g, "")
@@ -58,15 +57,18 @@ function runConvert(level) {
 
     document.getElementById("output").innerText = converted;
 
+    let score = calcScore(text, converted);
     document.getElementById("score").innerText =
-      "自然さスコア: " + calcScore(text, converted);
+      "自然さスコア: " + score;
+
+    document.getElementById("scoreBar").style.width = score + "%";
 
     document.getElementById("reason").innerText =
       generateReason(text);
 
     document.getElementById("loading").style.display = "none";
 
-  }, 400);
+  }, 300);
 }
 
 function calcScore(original, converted) {
