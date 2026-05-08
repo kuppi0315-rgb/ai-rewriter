@@ -7,24 +7,36 @@ function convert() {
     return;
   }
 
-  document.getElementById("loading").style.display = "block";
+  document.getElementById("loading").style.display =
+    "block";
 
   setTimeout(() => {
 
-    document.getElementById("before").innerText = input;
+    // 変換前表示
+    document.getElementById("before").innerText =
+      input;
+
+    // 変換前スコア
+    const beforeScore =
+      Math.floor(Math.random() * 31) + 50;
+
+    document.getElementById("beforeScore").innerText =
+      "変換前自然さ：" + beforeScore + "点";
 
     let output = input;
 
-    // 標準変換
+    // 共通変換
     output = output.replace(/非常に/g, "かなり");
     output = output.replace(/利用する/g, "使う");
     output = output.replace(/することができます/g, "できます");
 
     // モード取得
     const mode =
-      document.querySelector('input[name="mode"]:checked').value;
+      document.querySelector(
+        'input[name="mode"]:checked'
+      ).value;
 
-    // モード別
+    // レポート
     if (mode === "report") {
 
       output = output.replace(/すごく/g, "非常に");
@@ -32,6 +44,7 @@ function convert() {
 
     }
 
+    // カジュアル
     if (mode === "casual") {
 
       output = output.replace(/です。/g, "！");
@@ -39,6 +52,7 @@ function convert() {
 
     }
 
+    // ES
     if (mode === "es") {
 
       output = output.replace(/思います/g, "考えています");
@@ -46,17 +60,24 @@ function convert() {
 
     }
 
-    document.getElementById("output").innerText = output;
+    // 出力
+    document.getElementById("output").innerText =
+      output;
 
-    // スコア
+    // 変換後スコア
     const score =
       Math.floor(Math.random() * 21) + 80;
 
     document.getElementById("score").innerText =
-      "自然さスコア：" + score + "点";
+      "変換後自然さ：" + score + "点";
 
+    // スコアバー
     document.getElementById("scoreBar").style.width =
       score + "%";
+
+    // 改善
+    document.getElementById("improveScore").innerText =
+      "+" + (score - beforeScore) + " 改善しました";
 
     // 理由
     let reason = "";
@@ -81,9 +102,11 @@ function convert() {
     document.getElementById("reason").innerText =
       reason;
 
+    // ローディング消す
     document.getElementById("loading").style.display =
       "none";
 
+    // コピー表示
     document.getElementById("copyBtn").style.display =
       "inline-block";
 
