@@ -3,11 +3,19 @@
 <head>
   <meta charset="UTF-8">
 
-  <title>AIリライター｜生成AI文章を自然な日本語に修正</title>
+  <title>
+    AIリライター｜生成AI文章を自然な日本語に修正する無料ツール
+  </title>
 
-  <meta name="description" content="生成AI（ChatGPTなど）で作成した文章を自然な日本語に変換する無料ツール">
+  <meta
+    name="description"
+    content="生成AI（ChatGPTなど）で作成した文章を自然な日本語に変換する無料ツール。レポート・ES・カジュアル文章に対応。"
+  >
 
-  <meta name="google-site-verification" content="yBGhlbyOhO3ESKcQlIhhgsZruC7BdkLmzDiIuU5-Wx4" />
+  <meta
+    name="google-site-verification"
+    content="yBGhlbyOhO3ESKcQlIhhgsZruC7BdkLmzDiIuU5-Wx4"
+  >
 
   <link rel="stylesheet" href="style.css">
 </head>
@@ -22,33 +30,72 @@
       生成AIで作成した文章を自然な日本語に変換
     </p>
 
+    <!-- SEO用 -->
+    <h2 class="seo-title">
+      レポート・ES・生成AI文章の自然化ツール
+    </h2>
+
     <div class="card">
 
-      <!-- 入力欄 -->
+      <!-- モード -->
+      <div class="mode-area">
+
+        <p class="mode-label">変換モード</p>
+
+        <div class="mode-buttons">
+
+          <button class="mode-btn active">
+            標準
+          </button>
+
+          <button class="mode-btn">
+            レポート
+          </button>
+
+          <button class="mode-btn">
+            カジュアル
+          </button>
+
+          <button class="mode-btn">
+            ES
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- 入力 -->
       <textarea
         id="input"
         placeholder="生成AI（ChatGPTなど）の文章を貼ってください"
       ></textarea>
 
-      <!-- 変換ボタン -->
-      <button onclick="convert()">変換</button>
+      <!-- ボタン -->
+      <div class="button-area">
+
+        <button onclick="convert()">
+          変換
+        </button>
+
+      </div>
 
       <!-- ローディング -->
-      <div id="loading">変換中...</div>
+      <div id="loading">
+        変換中...
+      </div>
 
-      <!-- 変換前 -->
+      <!-- 出力 -->
       <h3>変換前</h3>
       <div id="before"></div>
 
-      <!-- 変換後 -->
       <h3>変換後</h3>
       <div id="output"></div>
 
-      <!-- コピー（最初は非表示） -->
+      <!-- コピー -->
       <button
         id="copyBtn"
         onclick="copyText()"
-        style="display: none;"
+        style="display:none;"
       >
         コピー
       </button>
