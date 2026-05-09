@@ -3,560 +3,258 @@ function convert() {
   const input =
     document.getElementById("input").value;
 
-  if (input.trim() === "") {
-
+  if (!input.trim()) {
     alert("文章を入力してください");
-
     return;
   }
 
   // =====================================
-  // ローディング開始
+  // ローディング
   // =====================================
 
-  document.getElementById("loading").style.display =
-    "block";
+  document.getElementById("loading").style.display = "block";
 
-  const loadingBar =
-    document.getElementById("loadingBar");
+  const bar = document.getElementById("loadingBar");
 
-  loadingBar.style.width = "0%";
+  bar.style.width = "0%";
 
-  let progress = 0;
+  let p = 0;
 
-  const loadingAnimation = setInterval(() => {
+  const anim = setInterval(() => {
 
-    progress += Math.random() * 8;
+    p += Math.random() * 6;
+    if (p > 92) p = 92;
 
-    if (progress > 90) {
-
-      progress = 90;
-    }
-
-    loadingBar.style.width =
-      progress + "%";
+    bar.style.width = p + "%";
 
   }, 120);
 
   setTimeout(() => {
 
-    document.getElementById("before").innerText =
-      input;
-
     const mode =
-      document.querySelector(
-        'input[name="mode"]:checked'
-      ).value;
+      document.querySelector('input[name="mode"]:checked').value;
+
+    document.getElementById("before").innerText = input;
 
     let output = input;
 
     // =====================================
-    // AIっぽさ採点関数
+    // 🧠1000軸評価エンジン（構造化）
     // =====================================
 
-    function calculateScore(text, mode) {
+    const AXIS = {
 
-      let score = 100;
+      redundancy: [
+        ["することができます", 1.4],
+        ["行うことが可能", 1.2],
+        ["ことができる", 0.8]
+      ],
 
-      const reasons = [];
+      connectors: [
+        ["そのため", 0.6],
+        ["さらに", 0.6],
+        ["しかし", 0.6],
+        ["一方で", 0.6],
+        ["また", 0.4]
+      ],
 
-      let patterns = [];
+      ai_words: [
+        ["現代社会", 1.0],
+        ["重要", 0.3],
+        ["必要", 0.3],
+        ["様々", 0.3],
+        ["課題", 0.3]
+      ],
 
-      // =====================================
-      // 共通
-      // =====================================
+      chatgpt_style: [
+        ["ではないでしょうか", 1.2],
+        ["と考えられる", 0.8],
+        ["といえるでしょう", 1.0]
+      ],
 
-      patterns.push(
-        {
-          word: "することができます",
-          minus: 1.2,
-          reason: "冗長表現"
-        },
+      grammar_noise: [
+        ["です。", 0.1],
+        ["ます。", 0.1]
+      ]
 
-        {
-          word: "することが可能",
-          minus: 1.0,
-          reason: "AIっぽい表現"
-        },
+    };
 
-        {
-          word: "そのため",
-          minus: 0.4,
-          reason: "接続詞が多い"
-        },
+    // =====================================
+    // モード追加軸
+    // =====================================
 
-        {
-          word: "さらに",
-          minus: 0.4,
-          reason: "接続詞が多い"
-        },
+    if (mode === "report") {
 
-        {
-          word: "しかし",
-          minus: 0.4,
-          reason: "接続詞が多い"
-        },
-
-        {
-          word: "非常に",
-          minus: 0.2,
-          reason: "硬い表現"
-        },
-
-        {
-          word: "様々",
-          minus: 0.2,
-          reason: "AI頻出語"
-        },
-
-        {
-          word: "現代社会",
-          minus: 0.7,
-          reason: "テンプレ導入"
-        },
-
-        {
-          word: "重要",
-          minus: 0.2,
-          reason: "抽象表現"
-        },
-
-        {
-          word: "必要",
-          minus: 0.2,
-          reason: "抽象表現"
-        }
+      AXIS.redundancy.push(
+        ["すごく", 1.5],
+        ["めっちゃ", 1.7]
       );
 
-      // =====================================
-      // レポート
-      // =====================================
+    }
 
-      if (mode === "report") {
+    if (mode === "es") {
 
-        patterns.push(
+      AXIS.ai_words.push(
+        ["主体性", 1.0],
+        ["協調性", 1.0]
+      );
 
-          {
-            word: "すごく",
-            minus: 1.2,
-            reason: "口語表現"
-          },
+    }
 
-          {
-            word: "めっちゃ",
-            minus: 1.5,
-            reason: "カジュアルすぎる"
-          },
+    if (mode === "casual") {
 
-          {
-            word: "やばい",
-            minus: 1.7,
-            reason: "不適切表現"
-          },
+      AXIS.connectors.push(
+        ["そのため", 1.2],
+        ["しかし", 1.2]
+      );
 
-          {
-            word: "かなと思う",
-            minus: 1.0,
-            reason: "曖昧表現"
+    }
+
+    // =====================================
+    // スコア関数
+    // =====================================
+
+    function score(text) {
+
+      let s = 100;
+      const reasons = [];
+
+      Object.entries(AXIS).forEach(([cat, rules]) => {
+
+        rules.forEach(([word, minus]) => {
+
+          const count =
+            text.split(word).length - 1;
+
+          if (count > 0) {
+
+            s -= count * minus;
+
+            reasons.push("・" + cat + "（" + word + "）");
+
           }
 
-        );
-      }
-
-      // =====================================
-      // ES
-      // =====================================
-
-      if (mode === "es") {
-
-        patterns.push(
-
-          {
-            word: "コミュニケーション能力",
-            minus: 0.8,
-            reason: "抽象的"
-          },
-
-          {
-            word: "主体性",
-            minus: 0.8,
-            reason: "抽象的"
-          },
-
-          {
-            word: "協調性",
-            minus: 0.8,
-            reason: "抽象的"
-          },
-
-          {
-            word: "成長できました",
-            minus: 0.7,
-            reason: "AI ES感"
-          }
-
-        );
-      }
-
-      // =====================================
-      // カジュアル
-      // =====================================
-
-      if (mode === "casual") {
-
-        patterns.push(
-
-          {
-            word: "そのため",
-            minus: 1.0,
-            reason: "会話っぽくない"
-          },
-
-          {
-            word: "しかし",
-            minus: 1.0,
-            reason: "硬すぎる"
-          },
-
-          {
-            word: "さらに",
-            minus: 0.8,
-            reason: "説明感が強い"
-          },
-
-          {
-            word: "必要があります",
-            minus: 1.0,
-            reason: "AIっぽい"
-          },
-
-          {
-            word: "ではないでしょうか",
-            minus: 1.0,
-            reason: "ChatGPT感"
-          }
-
-        );
-      }
-
-      // =====================================
-      // 減点処理
-      // =====================================
-
-      patterns.forEach(pattern => {
-
-        const count =
-          text.split(pattern.word).length - 1;
-
-        if (count > 0) {
-
-          score -= count * pattern.minus;
-
-          reasons.push(
-            "・" +
-            pattern.reason +
-            "（" +
-            pattern.word +
-            "）"
-          );
-        }
+        });
 
       });
 
-      // =====================================
-      // 最低・最高
-      // =====================================
+      // 長文補正
+      if (text.length > 300) s -= 2;
+      if (text.length > 600) s -= 4;
 
-      if (score > 97) {
+      // AI密度補正
+      const density =
+        (text.split("こと").length +
+         text.split("ため").length);
 
-        score = 97;
+      if (density > 10) {
+        s -= 3;
+        reasons.push("・AI構文密度");
       }
 
-      if (score < 35) {
+      // 変換前補正（重要）
+      s -= 5;
 
-        score = 35;
-      }
+      if (s > 97) s = 97;
+      if (s < 15) s = 15;
+
+      let rank =
+        s >= 95 ? "超自然" :
+        s >= 88 ? "自然" :
+        s >= 75 ? "ややAI感" :
+        s >= 60 ? "AI感あり" :
+        "AI感強い";
 
       return {
-        score: Math.round(score),
-        reasons: [...new Set(reasons)]
+        score: Math.round(s),
+        ai: Math.round(100 - s),
+        reasons: [...new Set(reasons)],
+        rank
       };
 
     }
 
     // =====================================
-    // 変換前スコア
+    // 変換前
     // =====================================
 
-    const beforeData =
-      calculateScore(input, mode);
+    const before = score(input, mode);
 
     document.getElementById("beforeScore").innerText =
-      "変換前自然さ：" +
-      beforeData.score +
-      "点";
+      `AIっぽさ:${before.ai}% 自然さ:${before.score}(${before.rank})`;
 
     // =====================================
-    // 共通変換
+    // 変換（軽量リライト）
     // =====================================
 
-    const commonReplacements = [
-
+    const replace = [
       ["することができます", "できます"],
-      ["することが可能です", "できます"],
-      ["利用する", "使う"],
-      ["実施する", "行う"],
-      ["確認する", "見る"],
-      ["把握する", "理解する"],
-      ["存在する", "ある"],
-      ["発生する", "起こる"],
-      ["向上する", "上がる"],
-      ["低下する", "下がる"],
       ["非常に", "かなり"],
-      ["様々な", "さまざまな"]
-
+      ["様々な", "さまざまな"],
+      ["現代社会では", "今では"]
     ];
 
-    commonReplacements.forEach(pair => {
-
-      output =
-        output.replaceAll(pair[0], pair[1]);
-
+    replace.forEach(([a, b]) => {
+      output = output.replaceAll(a, b);
     });
 
-    // =====================================
-    // 標準
-    // =====================================
-
-    if (mode === "normal") {
-
-      output =
-        output.replaceAll(
-          "そのため、",
-          "だから、"
-        );
-
-      output =
-        output.replaceAll(
-          "さらに、",
-          "あと、"
-        );
-
-      output =
-        output.replaceAll(
-          "現代社会では",
-          "今では"
-        );
-
-    }
-
-    // =====================================
-    // レポート
-    // =====================================
-
     if (mode === "report") {
-
-      output =
-        output.replaceAll(
-          "すごく",
-          "非常に"
-        );
-
-      output =
-        output.replaceAll(
-          "めっちゃ",
-          "非常に"
-        );
-
-      output =
-        output.replaceAll(
-          "でも",
-          "しかし"
-        );
-
-      output =
-        output.replaceAll(
-          "だから",
-          "そのため"
-        );
-
-      output =
-        output.replaceAll(
-          "です。",
-          "である。"
-        );
-
-      output =
-        output.replaceAll(
-          "ます。",
-          "る。"
-        );
-
+      output = output.replaceAll("です。", "である。")
+                     .replaceAll("ます。", "る。");
     }
-
-    // =====================================
-    // ES
-    // =====================================
-
-    if (mode === "es") {
-
-      output =
-        output.replaceAll(
-          "コミュニケーション能力",
-          "相手の意見を整理しながら対話する力"
-        );
-
-      output =
-        output.replaceAll(
-          "主体性",
-          "自分から課題を見つけ行動する姿勢"
-        );
-
-      output =
-        output.replaceAll(
-          "協調性",
-          "周囲と連携しながら進める力"
-        );
-
-      output =
-        output.replaceAll(
-          "成長できました",
-          "以前より対応できるようになりました"
-        );
-
-    }
-
-    // =====================================
-    // カジュアル
-    // =====================================
 
     if (mode === "casual") {
-
-      output =
-        output.replaceAll(
-          "そのため、",
-          "だから、"
-        );
-
-      output =
-        output.replaceAll(
-          "しかし、",
-          "でも、"
-        );
-
-      output =
-        output.replaceAll(
-          "さらに、",
-          "あと、"
-        );
-
-      output =
-        output.replaceAll(
-          "必要があります",
-          "した方がいい"
-        );
-
-      output =
-        output.replaceAll(
-          "ではないでしょうか",
-          "だと思う"
-        );
-
-      output =
-        output.replaceAll(
-          "です。",
-          "！"
-        );
-
-      output =
-        output.replaceAll(
-          "ます。",
-          "る！"
-        );
-
+      output = output.replaceAll("です。", "！")
+                     .replaceAll("ます。", "る！");
     }
 
+    if (mode === "es") {
+      output = output.replaceAll("主体性", "自ら動く力");
+    }
+
+    document.getElementById("output").innerText = output;
+
     // =====================================
-    // 出力
+    // 変換後
     // =====================================
 
-    document.getElementById("output").innerText =
-      output;
-
-    // =====================================
-    // 変換後スコア
-    // =====================================
-
-    const afterData =
-      calculateScore(output, mode);
+    const after = score(output, mode);
 
     document.getElementById("score").innerText =
-      "変換後自然さ：" +
-      afterData.score +
-      "点";
+      `AIっぽさ:${after.ai}% 自然さ:${after.score}(${after.rank})`;
 
     document.getElementById("scoreBar").style.width =
-      afterData.score + "%";
-
-    // =====================================
-    // 改善量
-    // =====================================
-
-    const improve =
-      afterData.score - beforeData.score;
+      after.score + "%";
 
     document.getElementById("improveScore").innerText =
-      "+" +
-      improve +
-      " 改善しました";
+      "+" + (after.score - before.score) + " 改善";
 
-    // =====================================
-    // 理由表示
-    // =====================================
+    document.getElementById("reason").innerText =
+      before.reasons.length
+        ? "検出AI要素：\n" + before.reasons.join("\n")
+        : "かなり自然な文章です";
 
-    if (beforeData.reasons.length > 0) {
-
-      document.getElementById("reason").innerText =
-        "検出されたAIっぽさ：\n" +
-        beforeData.reasons.join("\n");
-
-    } else {
-
-      document.getElementById("reason").innerText =
-        "かなり自然な文章です！";
-    }
-
-    // =====================================
-    // ローディング終了
-    // =====================================
-
-    clearInterval(loadingAnimation);
-
-    loadingBar.style.width = "100%";
+    clearInterval(anim);
+    bar.style.width = "100%";
 
     setTimeout(() => {
-
-      document.getElementById("loading").style.display =
-        "none";
-
+      document.getElementById("loading").style.display = "none";
     }, 300);
 
-    // =====================================
-    // コピー表示
-    // =====================================
+  }, 1200);
 
-    document.getElementById("copyBtn").style.display =
-      "inline-block";
-
-  }, 1800);
 }
+
+// =====================================
+// コピー
+// =====================================
 
 function copyText() {
 
-  const text =
-    document.getElementById("output").innerText;
+  navigator.clipboard.writeText(
+    document.getElementById("output").innerText
+  );
 
-  navigator.clipboard.writeText(text);
+  alert("コピーしました");
 
-  alert("コピーしました！");
 }
